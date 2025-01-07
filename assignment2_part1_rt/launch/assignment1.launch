@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find assignment2_part1_rt)/launch/sim_w1.launch" />
+    <param name="des_pos_x" value= "0.0" />
+    <param name="des_pos_y" value= "1.0" />
+    <param name="window_size" value= "10" />
+    <node pkg="assignment2_part1_rt" type="wall_follow_service.py" name="wall_follower" />
+    <node pkg="assignment2_part1_rt" type="go_to_point_service.py" name="go_to_point"  />
+    <node pkg="assignment2_part1_rt" type="action_client.py" name="action_client" launch-prefix="xterm -e"/>
+    <node pkg="assignment2_part1_rt" type="last_target.py" name="last_input_srv" output="screen"/>
+    <node pkg="assignment2_part1_rt" type="dis_avg.py" name="dist_avg_srv"/>
+    <node pkg="assignment2_part1_rt" type="bug_as.py" name="bug_action_service" output="screen" />
+</launch>
+
