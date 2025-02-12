@@ -210,3 +210,4 @@ target_link_libraries(distance_node2 ${catkin_LIBRARIES})
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
