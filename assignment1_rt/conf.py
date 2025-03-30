@@ -25,6 +25,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 autodoc_mock_imports = ['turtlesim', 'rospy', 'geometry_msgs', 'other_missing_modules']
 
 # -- Options for HTML output -------------------------------------------------
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_output_path = 'docs'
