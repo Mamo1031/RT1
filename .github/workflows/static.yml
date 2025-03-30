@@ -25,6 +25,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
+      # Create docs directory and copy content from assignment docs folders
+      - name: Create and populate docs directory
+        run: |
+          mkdir -p docs
+          cp -r RT1/assignment1_rt/docs/* docs/ || true
+          # cp -r RT1/assignment2_part1_rt/docs/* docs/ || true
+          # cp -r RT1/assignment2_part2_rt/docs/* docs/ || true
+          echo "Contents of created docs directory:"
+          ls -la docs
       # Debug step
       - name: List contents of docs directory
         run: ls -la docs
