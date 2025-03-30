@@ -44,8 +44,8 @@ def get_user_input() -> Tuple[Optional[str], Optional[float], Optional[float]]:
             - (str): The selected turtle name ("turtle1" or "turtle2").
             - (float): The linear velocity.
             - (float): The angular velocity.
+            
         Returns (None, None, None) if the input is invalid.
-
     """
     choice = input("Which turtle to control? (1 for turtle1, 2 for turtle2): ")
     if choice == "1":
