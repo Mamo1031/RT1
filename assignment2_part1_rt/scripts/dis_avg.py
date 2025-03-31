@@ -18,15 +18,17 @@ def distAvgCallback(msg: DisAvg) -> DisAvgResponse:
     """
     Service callback function to compute the robot's distance from the target
     and calculate the average linear and angular velocities.
-
-    Args:
-        msg (DisAvg): Service request (not used directly in this implementation).
-
-    Returns:
-        DisAvgResponse: Response containing:
-            - distance (float): Distance between the robot and target.
-            - avg_v_x (float): Average linear velocity along the x-axis.
-            - avg_v_z (float): Average angular velocity around the z-axis.
+    
+    :param msg: Service request containing necessary information
+    :type msg: DisAvg
+    
+    :return: Service response with calculated distance and average velocities
+    :rtype: DisAvgResponse
+    
+    The response contains the following fields:
+        * distance (float): Euclidean distance between robot and target position.
+        * avg_v_x (float): Average linear velocity along the x-axis over the sliding window.
+        * avg_v_z (float): Average angular velocity around the z-axis over the sliding window.
     """
     # Retrieve goal coordinates from parameters
     des_x: float = rospy.get_param("des_pos_x")
@@ -47,9 +49,16 @@ def subCallback(msg: Status) -> None:
     """
     Subscriber callback function for the '/status' topic.
     Updates the robot's position and maintains a sliding window of recent velocities.
-
-    Args:
-        msg (Status): Incoming message containing the robot's position and velocities.
+    
+    :param msg: Incoming message containing the robot's position and velocities
+    :type msg: Status
+    
+    :return: None
+    
+    This function:
+        * Updates the global position variables (x, y)
+        * Adds new velocity measurements to the velocity history lists
+        * Maintains the sliding window size based on the '/window_size' parameter
     """
     global x, y
 
@@ -72,8 +81,15 @@ def subCallback(msg: Status) -> None:
 
 def main() -> None:
     """
-    Main function to initialize the ROS node, set up the subscriber and service,
-    and keep the server running until shutdown.
+    Main function to initialize the ROS node, set up the subscriber and service.
+    
+    This function:
+        * Initializes the ROS node 'dist_avg_srv'
+        * Creates a subscriber to the '/status' topic
+        * Advertises the 'dist_avg' service
+        * Keeps the node running with rospy.spin()
+    
+    :return: None
     """
     # Initialize the ROS node
     rospy.init_node("dist_avg_srv")
@@ -94,4 +110,3 @@ if __name__ == "__main__":
     except rospy.ROSInterruptException:
         # Handle program interruption gracefully
         print("Program interrupted before completion", file=sys.stderr)
-

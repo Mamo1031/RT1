@@ -3,7 +3,7 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
-from std_srvs.srv import *
+from std_srvs.srv import SetBool, SetBoolResponse
 
 from typing import Dict
 
@@ -26,14 +26,15 @@ state_dict_: Dict[int, str] = {  # Mapping states to descriptions
 
 
 def wall_follower_switch(req: SetBool) -> SetBoolResponse:
-    """
-    Callback function for the wall_follower_switch service.
-
-    Args:
-        req (SetBool): Service request containing a boolean to activate/deactivate the wall follower.
-
-    Returns:
-        SetBoolResponse: Response indicating the success and status message.
+    """Service callback to activate or deactivate the wall follower.
+    
+    This function handles requests to turn the wall following behavior
+    on or off by setting the global active_ flag.
+    
+    :param req: Service request containing a boolean to activate/deactivate the wall follower
+    :type req: SetBool
+    :return: Response indicating success and a status message
+    :rtype: SetBoolResponse
     """
     global active_
     active_ = req.data
@@ -44,14 +45,14 @@ def wall_follower_switch(req: SetBool) -> SetBoolResponse:
 
 
 def clbk_laser(msg: LaserScan) -> None:
-    """
-    Callback function for processing laser scan data.
-
-    Args:
-        msg (LaserScan): Laser scan data from the robot's sensors.
-
-    Updates:
-        - Populates the 'regions_' dictionary with minimum distances detected in each region.
+    """Process laser scan data and take appropriate action.
+    
+    This callback divides the laser scan into five regions and stores the minimum
+    distance to obstacles in each region. It then decides the next action based on these values.
+    
+    :param msg: Laser scan data from the robot's sensors
+    :type msg: LaserScan
+    :return: None
     """
     global regions_
     regions_ = {
@@ -65,11 +66,14 @@ def clbk_laser(msg: LaserScan) -> None:
 
 
 def change_state(state: int) -> None:
-    """
-    Changes the robot's current state and logs the change.
-
-    Args:
-        state (int): The new state to set (0 - find the wall, 1 - turn left, 2 - follow the wall).
+    """Change the robot's current state and log the change.
+    
+    This function updates the robot's state if it differs from the current state
+    and logs the change for debugging purposes.
+    
+    :param state: The new state to set (0: find the wall, 1: turn left, 2: follow the wall)
+    :type state: int
+    :return: None
     """
     global state_, state_dict_
     if state != state_:
@@ -78,11 +82,12 @@ def change_state(state: int) -> None:
 
 
 def take_action() -> None:
-    """
-    Decides the next action based on the laser scan data and current state.
-
-    Updates:
-        - Changes the robot's state based on obstacle proximity.
+    """Determine and set the next robot state based on sensor data.
+    
+    This function analyzes the data in the regions_ dictionary to decide
+    which state the robot should be in for effective wall following.
+    
+    :return: None
     """
     global regions_
     regions = regions_
@@ -99,11 +104,13 @@ def take_action() -> None:
 
 
 def find_wall() -> Twist:
-    """
-    Generates a Twist message to move forward and slightly to the right.
-
-    Returns:
-        Twist: Velocity command to find the wall.
+    """Generate velocity command to find a wall.
+    
+    Creates a Twist message that moves the robot forward while turning slightly
+    to the right, helping it locate a wall to follow.
+    
+    :return: Velocity command to find the wall
+    :rtype: Twist
     """
     msg = Twist()
     msg.linear.x = 0.2
@@ -112,11 +119,13 @@ def find_wall() -> Twist:
 
 
 def turn_left() -> Twist:
-    """
-    Generates a Twist message to turn the robot to the left.
-
-    Returns:
-        Twist: Velocity command to turn left.
+    """Generate velocity command to turn the robot left.
+    
+    Creates a Twist message that makes the robot turn to the left,
+    typically used when an obstacle is detected in front.
+    
+    :return: Velocity command to turn left
+    :rtype: Twist
     """
     msg = Twist()
     msg.angular.z = 0.3
@@ -124,11 +133,13 @@ def turn_left() -> Twist:
 
 
 def follow_the_wall() -> Twist:
-    """
-    Generates a Twist message to move the robot along the wall.
-
-    Returns:
-        Twist: Velocity command to follow the wall.
+    """Generate velocity command to follow alongside a wall.
+    
+    Creates a Twist message that moves the robot forward at a moderate speed,
+    maintaining its current distance from the wall.
+    
+    :return: Velocity command to follow the wall
+    :rtype: Twist
     """
     msg = Twist()
     msg.linear.x = 0.5
@@ -136,11 +147,12 @@ def follow_the_wall() -> Twist:
 
 
 def main() -> None:
-    """
-    Main function to initialize the ROS node and execute the wall-following behavior.
-
-    - Sets up publishers, subscribers, and services.
-    - Controls the robot based on the current state and sensor data.
+    """Initialize and run the wall following node.
+    
+    This function sets up the ROS node, creates publishers, subscribers, and services,
+    and contains the main control loop that executes the wall-following behavior.
+    
+    :return: None
     """
     global pub_, active_
 
@@ -181,4 +193,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

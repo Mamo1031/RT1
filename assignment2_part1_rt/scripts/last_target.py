@@ -1,5 +1,13 @@
 #! /usr/bin/env python3
 
+"""
+Last Target Service Node
+
+This module provides a ROS service that returns the last target coordinates 
+set as ROS parameters. It can be used to retrieve the most recent goal 
+position sent to the robot.
+"""
+
 import rospy
 import assignment2_part1_rt.srv
 import assignment2_part1_rt.msg
@@ -14,11 +22,10 @@ def callback(msg: assignment2_part1_rt.msg.PlanningActionGoal) -> LastInputRespo
     This function retrieves the last target coordinates (x, y) set as ROS parameters
     and returns them as a service response.
 
-    Args:
-        msg (PlanningActionGoal): The robot's current goal, received from the service request.
-
-    Returns:
-        LastInputResponse: The response containing the last target coordinates (x, y).
+    :param msg: The service request message, though not used in the current implementation
+    :type msg: assignment2_part1_rt.msg.PlanningActionGoal
+    :return: A response object containing the last target coordinates
+    :rtype: LastInputResponse
     """
     # Retrieve x, y coordinates from ROS parameters
     x: Union[int, float] = rospy.get_param("des_pos_x")
@@ -34,6 +41,8 @@ def main() -> None:
 
     This function initializes the ROS node, creates a service to handle requests for
     the last target input, and keeps the node running until shut down.
+
+    :raises: rospy.ROSInterruptException: If the ROS node is interrupted before completion
     """
     # Initialize the ROS node with the name 'last_input_srv'
     rospy.init_node("last_input_srv")

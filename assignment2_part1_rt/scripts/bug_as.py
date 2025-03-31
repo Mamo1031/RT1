@@ -1,5 +1,19 @@
 #! /usr/bin/env python3
 
+"""
+Bug Algorithm implementation for robot navigation with obstacle avoidance.
+
+This module implements a Bug0 algorithm for robot navigation in ROS. It allows the robot
+to move towards a goal position while avoiding obstacles using wall following behavior.
+The module uses an action server to handle navigation goals.
+
+The module provides:
+- Callbacks for odometry and laser scan data
+- State machine for switching between go-to-point and wall-following behaviors
+- Action server implementation for handling navigation goals
+
+"""
+
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
 from sensor_msgs.msg import LaserScan
@@ -9,7 +23,7 @@ import actionlib
 import actionlib.msg
 import assignment2_part1_rt.msg
 from tf import transformations
-from std_srvs.srv import *
+from std_srvs.srv import SetBool, Empty
 import time
 from typing import Optional, Dict
 
@@ -37,12 +51,19 @@ def clbk_odom(msg: Odometry) -> None:
     """
     Callback function for the '/odom' topic subscriber.
 
+    This function processes odometry data to extract the robot's position,
+    pose, and orientation (yaw angle).
+
     Args:
         msg (Odometry): Odometry message containing the robot's position and orientation.
 
+    Returns:
+        None
+
     Updates:
-        - Position and pose of the robot.
-        - Yaw angle of the robot.
+        - position_ (Point): Position of the robot.
+        - pose_ (Pose): Pose of the robot.
+        - yaw_ (float): Yaw angle of the robot in radians.
     """
     global position_, yaw_, pose_
 
@@ -65,11 +86,18 @@ def clbk_laser(msg: LaserScan) -> None:
     """
     Callback function for the '/scan' topic subscriber.
 
+    This function processes laser scan data to identify obstacles in different regions
+    around the robot (right, front-right, front, front-left, left).
+
     Args:
         msg (LaserScan): Laser scan data providing distances to obstacles.
 
+    Returns:
+        None
+
     Updates:
-        - Distance measurements in predefined regions around the robot.
+        - regions_ (Dict[str, float]): Dictionary containing distance measurements 
+          in predefined regions around the robot.
     """
     global regions_
     regions_ = {
@@ -85,11 +113,20 @@ def change_state(state: int) -> None:
     """
     Changes the robot's behavior state and activates the corresponding services.
 
+    This function manages the transition between different states of the robot's
+    behavior and activates or deactivates the appropriate services accordingly.
+
     Args:
         state (int): The new state to switch to.
                      0 - Go to point
                      1 - Wall following
                      2 - Done
+
+    Returns:
+        None
+
+    See Also:
+        srv_client_go_to_point_, srv_client_wall_follower_
     """
     global state_, state_desc_
     global srv_client_wall_follower_, srv_client_go_to_point_
@@ -114,11 +151,14 @@ def normalize_angle(angle: float) -> float:
     """
     Normalizes an angle to the range [-pi, pi].
 
+    This function ensures that the angle is within the standard range by
+    applying the appropriate transformation.
+
     Args:
-        angle (float): Angle in radians.
+        angle (float): Angle in radians to be normalized.
 
     Returns:
-        float: Normalized angle.
+        float: Normalized angle in the range [-pi, pi].
     """
     if math.fabs(angle) > math.pi:
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
@@ -128,6 +168,12 @@ def normalize_angle(angle: float) -> float:
 def done() -> None:
     """
     Stops the robot by publishing zero velocities.
+
+    This function is called when navigation is complete or needs to be
+    interrupted, ensuring the robot comes to a complete stop.
+
+    Returns:
+        None
     """
     twist_msg = Twist()
     twist_msg.linear.x = 0
@@ -139,10 +185,23 @@ def planning(goal: assignment2_part1_rt.msg.PlanningGoal) -> None:
     """
     Executes the planning to move the robot towards the target position.
 
-    Args:
-        goal (PlanningGoal): Goal containing the target position.
+    This function is the callback for the action server. It manages the robot's
+    movement while checking its state and updating feedback to the client.
+    It implements the core of the Bug0 algorithm.
 
-    Manages the robot's movement while checking its state and updating feedback.
+    Args:
+        goal (PlanningGoal): Goal containing the target position coordinates.
+
+    Returns:
+        None
+
+    Updates:
+        - Robot's state through the state machine
+        - Provides feedback to the action client
+        - Sets the final result of the action
+
+    See Also:
+        change_state(), done()
     """
     global regions_, position_, desired_position_, state_, yaw_, yaw_error_allowed_
     global srv_client_go_to_point_, srv_client_wall_follower_, act_s, pose_
@@ -205,6 +264,16 @@ def planning(goal: assignment2_part1_rt.msg.PlanningGoal) -> None:
 def main() -> None:
     """
     Main function to initialize the node and setup subscribers, publishers, and services.
+
+    This function:
+    - Initializes the ROS node
+    - Sets up subscribers for laser and odometry data
+    - Creates service clients for navigation behaviors
+    - Initializes and starts the action server
+    - Sets default desired position
+
+    Returns:
+        None
     """
     time.sleep(2)
     global srv_client_go_to_point_, srv_client_wall_follower_, act_s, pub
@@ -236,4 +305,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
