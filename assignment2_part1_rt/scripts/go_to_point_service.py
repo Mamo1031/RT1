@@ -234,8 +234,7 @@ def main() -> None:
     This function:
     1. Initializes the ROS node
     2. Sets up publishers, subscribers, and services
-    3. Implements the main control loop that drives the robot's behavior
-       based on its current state
+    3. Implements the main control loop that drives the robot's behavior based on its current state
 
     Returns:
         None

@@ -29,7 +29,7 @@ def wall_follower_switch(req: SetBool) -> SetBoolResponse:
     """Service callback to activate or deactivate the wall follower.
     
     This function handles requests to turn the wall following behavior
-    on or off by setting the global active_ flag.
+    on or off by setting the global ``active_`` flag.
     
     :param req: Service request containing a boolean to activate/deactivate the wall follower
     :type req: SetBool
@@ -84,7 +84,7 @@ def change_state(state: int) -> None:
 def take_action() -> None:
     """Determine and set the next robot state based on sensor data.
     
-    This function analyzes the data in the regions_ dictionary to decide
+    This function analyzes the data in the global ``regions_`` dictionary to decide
     which state the robot should be in for effective wall following.
     
     :return: None

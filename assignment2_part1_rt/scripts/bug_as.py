@@ -61,9 +61,9 @@ def clbk_odom(msg: Odometry) -> None:
         None
 
     Updates:
-        - position_ (Point): Position of the robot.
-        - pose_ (Pose): Pose of the robot.
-        - yaw_ (float): Yaw angle of the robot in radians.
+        - `position_` (Point): Position of the robot.
+        - `pose_` (Pose): Pose of the robot.
+        - `yaw_` (float): Yaw angle of the robot in radians.
     """
     global position_, yaw_, pose_
 
@@ -96,7 +96,7 @@ def clbk_laser(msg: LaserScan) -> None:
         None
 
     Updates:
-        - regions_ (Dict[str, float]): Dictionary containing distance measurements 
+        - `regions_` (Dict[str, float]): Dictionary containing distance measurements 
           in predefined regions around the robot.
     """
     global regions_
@@ -126,7 +126,7 @@ def change_state(state: int) -> None:
         None
 
     See Also:
-        srv_client_go_to_point_, srv_client_wall_follower_
+        `srv_client_go_to_point_`, `srv_client_wall_follower_`
     """
     global state_, state_desc_
     global srv_client_wall_follower_, srv_client_go_to_point_
