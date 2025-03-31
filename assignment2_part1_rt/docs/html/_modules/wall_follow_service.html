@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wall_follow_service &mdash; assignment2_part1_rt  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            assignment2_part1_rt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">assignment2_part1_rt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">wall_follow_service</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for wall_follow_service</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Twist</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_srvs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">SetBoolResponse</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="c1"># Global variables</span>
+<span class="n">active_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Indicates if the wall follower is active</span>
+<span class="n">pub_</span><span class="p">:</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span>  <span class="c1"># Publisher for velocity commands</span>
+<span class="n">regions_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># Stores laser scan data divided into regions</span>
+    <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;fright&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;front&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;fleft&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">state_</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Current state of the robot</span>
+<span class="n">state_dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># Mapping states to descriptions</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;find the wall&quot;</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;turn left&quot;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;follow the wall&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="wall_follower_switch"><a class="viewcode-back" href="../index.html#wall_follow_service.wall_follower_switch">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">wall_follower_switch</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">SetBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service callback to activate or deactivate the wall follower.</span>
+<span class="sd">    </span>
+<span class="sd">    This function handles requests to turn the wall following behavior</span>
+<span class="sd">    on or off by setting the global ``active_`` flag.</span>
+<span class="sd">    </span>
+<span class="sd">    :param req: Service request containing a boolean to activate/deactivate the wall follower</span>
+<span class="sd">    :type req: SetBool</span>
+<span class="sd">    :return: Response indicating success and a status message</span>
+<span class="sd">    :rtype: SetBoolResponse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">active_</span>
+    <span class="n">active_</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">SetBoolResponse</span><span class="p">()</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Done!&quot;</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="clbk_laser"><a class="viewcode-back" href="../index.html#wall_follow_service.clbk_laser">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">clbk_laser</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">LaserScan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process laser scan data and take appropriate action.</span>
+<span class="sd">    </span>
+<span class="sd">    This callback divides the laser scan into five regions and stores the minimum</span>
+<span class="sd">    distance to obstacles in each region. It then decides the next action based on these values.</span>
+<span class="sd">    </span>
+<span class="sd">    :param msg: Laser scan data from the robot&#39;s sensors</span>
+<span class="sd">    :type msg: LaserScan</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">regions_</span>
+    <span class="n">regions_</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">143</span><span class="p">]),</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="s2">&quot;fright&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">144</span><span class="p">:</span><span class="mi">287</span><span class="p">]),</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="s2">&quot;front&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">288</span><span class="p">:</span><span class="mi">431</span><span class="p">]),</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="s2">&quot;fleft&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">432</span><span class="p">:</span><span class="mi">575</span><span class="p">]),</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">576</span><span class="p">:</span><span class="mi">713</span><span class="p">]),</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">take_action</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="change_state"><a class="viewcode-back" href="../index.html#wall_follow_service.change_state">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">change_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Change the robot&#39;s current state and log the change.</span>
+<span class="sd">    </span>
+<span class="sd">    This function updates the robot&#39;s state if it differs from the current state</span>
+<span class="sd">    and logs the change for debugging purposes.</span>
+<span class="sd">    </span>
+<span class="sd">    :param state: The new state to set (0: find the wall, 1: turn left, 2: follow the wall)</span>
+<span class="sd">    :type state: int</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">state_</span><span class="p">,</span> <span class="n">state_dict_</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="n">state_</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wall follower - [</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">] - </span><span class="si">{</span><span class="n">state_dict_</span><span class="p">[</span><span class="n">state</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">state_</span> <span class="o">=</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="take_action"><a class="viewcode-back" href="../index.html#wall_follow_service.take_action">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">take_action</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine and set the next robot state based on sensor data.</span>
+<span class="sd">    </span>
+<span class="sd">    This function analyzes the data in the global ``regions_`` dictionary to decide</span>
+<span class="sd">    which state the robot should be in for effective wall following.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">regions_</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="n">regions_</span>
+    <span class="n">d0</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Threshold for detecting obstacles</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># Safe distance threshold</span>
+
+    <span class="c1"># State determination based on distances in regions</span>
+    <span class="k">if</span> <span class="n">regions</span><span class="p">[</span><span class="s2">&quot;front&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d0</span> <span class="ow">and</span> <span class="n">regions</span><span class="p">[</span><span class="s2">&quot;fleft&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span> <span class="ow">and</span> <span class="n">regions</span><span class="p">[</span><span class="s2">&quot;fright&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">change_state</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Find the wall</span>
+    <span class="k">elif</span> <span class="n">regions</span><span class="p">[</span><span class="s2">&quot;front&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">d0</span><span class="p">:</span>
+        <span class="n">change_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Turn left</span>
+    <span class="k">elif</span> <span class="n">regions</span><span class="p">[</span><span class="s2">&quot;fright&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">change_state</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Follow the wall</span></div>
+
+
+<div class="viewcode-block" id="find_wall"><a class="viewcode-back" href="../index.html#wall_follow_service.find_wall">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">find_wall</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Twist</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate velocity command to find a wall.</span>
+<span class="sd">    </span>
+<span class="sd">    Creates a Twist message that moves the robot forward while turning slightly</span>
+<span class="sd">    to the right, helping it locate a wall to follow.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: Velocity command to find the wall</span>
+<span class="sd">    :rtype: Twist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="turn_left"><a class="viewcode-back" href="../index.html#wall_follow_service.turn_left">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">turn_left</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Twist</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate velocity command to turn the robot left.</span>
+<span class="sd">    </span>
+<span class="sd">    Creates a Twist message that makes the robot turn to the left,</span>
+<span class="sd">    typically used when an obstacle is detected in front.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: Velocity command to turn left</span>
+<span class="sd">    :rtype: Twist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="follow_the_wall"><a class="viewcode-back" href="../index.html#wall_follow_service.follow_the_wall">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">follow_the_wall</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Twist</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate velocity command to follow alongside a wall.</span>
+<span class="sd">    </span>
+<span class="sd">    Creates a Twist message that moves the robot forward at a moderate speed,</span>
+<span class="sd">    maintaining its current distance from the wall.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: Velocity command to follow the wall</span>
+<span class="sd">    :rtype: Twist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../index.html#wall_follow_service.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize and run the wall following node.</span>
+<span class="sd">    </span>
+<span class="sd">    This function sets up the ROS node, creates publishers, subscribers, and services,</span>
+<span class="sd">    and contains the main control loop that executes the wall-following behavior.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">pub_</span><span class="p">,</span> <span class="n">active_</span>
+
+    <span class="c1"># Initialize the ROS node</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;reading_laser&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Publisher for velocity commands</span>
+    <span class="n">pub_</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/cmd_vel&quot;</span><span class="p">,</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Subscriber to laser scan data</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/scan&quot;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">clbk_laser</span><span class="p">)</span>
+
+    <span class="c1"># Service to enable or disable wall following</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;wall_follower_switch&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">wall_follower_switch</span><span class="p">)</span>
+
+    <span class="c1"># Control loop</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">active_</span><span class="p">:</span>
+            <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Generate velocity commands based on the current state</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">state_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">find_wall</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">state_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">turn_left</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">state_</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">follow_the_wall</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Unknown state!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Publish the velocity command</span>
+        <span class="n">pub_</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mamoru Ota.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

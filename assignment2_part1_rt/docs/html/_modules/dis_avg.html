@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dis_avg &mdash; assignment2_part1_rt  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            assignment2_part1_rt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">assignment2_part1_rt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">dis_avg</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for dis_avg</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">assignment2_part1_rt.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">assignment2_part1_rt.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">DisAvg</span><span class="p">,</span> <span class="n">DisAvgResponse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
+<span class="c1"># Global variables for robot position and velocities</span>
+<span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Current x-coordinate of the robot</span>
+<span class="n">y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Current y-coordinate of the robot</span>
+<span class="n">v_x_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># List to store recent x-axis velocities</span>
+<span class="n">v_z_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># List to store recent z-axis velocities</span>
+
+
+<div class="viewcode-block" id="distAvgCallback"><a class="viewcode-back" href="../index.html#dis_avg.distAvgCallback">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">distAvgCallback</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">DisAvg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DisAvgResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Service callback function to compute the robot&#39;s distance from the target</span>
+<span class="sd">    and calculate the average linear and angular velocities.</span>
+<span class="sd">    </span>
+<span class="sd">    :param msg: Service request containing necessary information</span>
+<span class="sd">    :type msg: DisAvg</span>
+<span class="sd">    </span>
+<span class="sd">    :return: Service response with calculated distance and average velocities</span>
+<span class="sd">    :rtype: DisAvgResponse</span>
+<span class="sd">    </span>
+<span class="sd">    The response contains the following fields:</span>
+<span class="sd">        * distance (float): Euclidean distance between robot and target position.</span>
+<span class="sd">        * avg_v_x (float): Average linear velocity along the x-axis over the sliding window.</span>
+<span class="sd">        * avg_v_z (float): Average angular velocity around the z-axis over the sliding window.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Retrieve goal coordinates from parameters</span>
+    <span class="n">des_x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;des_pos_x&quot;</span><span class="p">)</span>
+    <span class="n">des_y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;des_pos_y&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the Euclidean distance to the target</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">des_x</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">pow</span><span class="p">(</span><span class="n">des_y</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="c1"># Compute average velocities</span>
+    <span class="n">avg_v_x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v_x_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_x_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">v_x_list</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">avg_v_z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v_z_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_z_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">v_z_list</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Return the computed values as a response</span>
+    <span class="k">return</span> <span class="n">DisAvgResponse</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">avg_v_x</span><span class="p">,</span> <span class="n">avg_v_z</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="subCallback"><a class="viewcode-back" href="../index.html#dis_avg.subCallback">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">subCallback</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">Status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subscriber callback function for the &#39;/status&#39; topic.</span>
+<span class="sd">    Updates the robot&#39;s position and maintains a sliding window of recent velocities.</span>
+<span class="sd">    </span>
+<span class="sd">    :param msg: Incoming message containing the robot&#39;s position and velocities</span>
+<span class="sd">    :type msg: Status</span>
+<span class="sd">    </span>
+<span class="sd">    :return: None</span>
+<span class="sd">    </span>
+<span class="sd">    This function:</span>
+<span class="sd">        * Updates the global position variables (x, y)</span>
+<span class="sd">        * Adds new velocity measurements to the velocity history lists</span>
+<span class="sd">        * Maintains the sliding window size based on the &#39;/window_size&#39; parameter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="c1"># Update robot position</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">y</span>
+
+    <span class="c1"># Append new velocity values to the lists</span>
+    <span class="n">v_x_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">v_x</span><span class="p">)</span>
+    <span class="n">v_z_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">v_z</span><span class="p">)</span>
+
+    <span class="c1"># Get the sliding window size parameter</span>
+    <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/window_size&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Maintain the size of the sliding window</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_x_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">window_size</span><span class="p">:</span>
+        <span class="n">v_x_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Remove oldest x-axis velocity</span>
+        <span class="n">v_z_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Remove oldest z-axis velocity</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../index.html#dis_avg.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to initialize the ROS node, set up the subscriber and service.</span>
+<span class="sd">    </span>
+<span class="sd">    This function:</span>
+<span class="sd">        * Initializes the ROS node &#39;dist_avg_srv&#39;</span>
+<span class="sd">        * Creates a subscriber to the &#39;/status&#39; topic</span>
+<span class="sd">        * Advertises the &#39;dist_avg&#39; service</span>
+<span class="sd">        * Keeps the node running with rospy.spin()</span>
+<span class="sd">    </span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize the ROS node</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;dist_avg_srv&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Subscribe to the &#39;/status&#39; topic</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/status&quot;</span><span class="p">,</span> <span class="n">Status</span><span class="p">,</span> <span class="n">subCallback</span><span class="p">)</span>
+
+    <span class="c1"># Advertise the &#39;dist_avg&#39; service</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;dist_avg&quot;</span><span class="p">,</span> <span class="n">DisAvg</span><span class="p">,</span> <span class="n">distAvgCallback</span><span class="p">)</span>
+
+    <span class="c1"># Keep the service running</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="c1"># Handle program interruption gracefully</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Program interrupted before completion&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mamoru Ota.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
