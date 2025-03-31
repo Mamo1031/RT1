@@ -2,6 +2,8 @@
 build/
 devel/
 install/
+# Sphinx build directory
+_build/
 
 # Python cache files
 __pycache__/
