@@ -1,0 +1,825 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to assignment2_part1_rt’s documentation! &mdash; assignment2_part1_rt  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            assignment2_part1_rt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to assignment2_part1_rt’s documentation!</a></li>
+<li><a class="reference internal" href="#scripts-documentation">Scripts Documentation</a><ul>
+<li><a class="reference internal" href="#module-action_client">action_client.py</a><ul>
+<li><a class="reference internal" href="#action_client.action_client"><code class="docutils literal notranslate"><span class="pre">action_client()</span></code></a></li>
+<li><a class="reference internal" href="#action_client.callback"><code class="docutils literal notranslate"><span class="pre">callback()</span></code></a></li>
+<li><a class="reference internal" href="#action_client.client"><code class="docutils literal notranslate"><span class="pre">client</span></code></a></li>
+<li><a class="reference internal" href="#action_client.goalReached"><code class="docutils literal notranslate"><span class="pre">goalReached()</span></code></a></li>
+<li><a class="reference internal" href="#action_client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#action_client.pub"><code class="docutils literal notranslate"><span class="pre">pub</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-bug_as">bug_as.py</a><ul>
+<li><a class="reference internal" href="#bug_as.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.clbk_laser"><code class="docutils literal notranslate"><span class="pre">clbk_laser()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.clbk_odom"><code class="docutils literal notranslate"><span class="pre">clbk_odom()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.done"><code class="docutils literal notranslate"><span class="pre">done()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.normalize_angle"><code class="docutils literal notranslate"><span class="pre">normalize_angle()</span></code></a></li>
+<li><a class="reference internal" href="#bug_as.planning"><code class="docutils literal notranslate"><span class="pre">planning()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-dis_avg">dis_avg.py</a><ul>
+<li><a class="reference internal" href="#dis_avg.distAvgCallback"><code class="docutils literal notranslate"><span class="pre">distAvgCallback()</span></code></a></li>
+<li><a class="reference internal" href="#dis_avg.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#dis_avg.subCallback"><code class="docutils literal notranslate"><span class="pre">subCallback()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-go_to_point_service">go_to_point_service.py</a><ul>
+<li><a class="reference internal" href="#go_to_point_service.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.clbk_odom"><code class="docutils literal notranslate"><span class="pre">clbk_odom()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.done"><code class="docutils literal notranslate"><span class="pre">done()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.fix_yaw"><code class="docutils literal notranslate"><span class="pre">fix_yaw()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.go_straight_ahead"><code class="docutils literal notranslate"><span class="pre">go_straight_ahead()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.go_to_point_switch"><code class="docutils literal notranslate"><span class="pre">go_to_point_switch()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#go_to_point_service.normalize_angle"><code class="docutils literal notranslate"><span class="pre">normalize_angle()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-last_target">last_target.py</a><ul>
+<li><a class="reference internal" href="#last_target.callback"><code class="docutils literal notranslate"><span class="pre">callback()</span></code></a></li>
+<li><a class="reference internal" href="#last_target.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-wall_follow_service">wall_follow_service.py</a><ul>
+<li><a class="reference internal" href="#wall_follow_service.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.clbk_laser"><code class="docutils literal notranslate"><span class="pre">clbk_laser()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.find_wall"><code class="docutils literal notranslate"><span class="pre">find_wall()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.follow_the_wall"><code class="docutils literal notranslate"><span class="pre">follow_the_wall()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.pub_"><code class="docutils literal notranslate"><span class="pre">pub_</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.take_action"><code class="docutils literal notranslate"><span class="pre">take_action()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.turn_left"><code class="docutils literal notranslate"><span class="pre">turn_left()</span></code></a></li>
+<li><a class="reference internal" href="#wall_follow_service.wall_follower_switch"><code class="docutils literal notranslate"><span class="pre">wall_follower_switch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">assignment2_part1_rt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to assignment2_part1_rt’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-assignment2-part1-rt-s-documentation">
+<h1>Welcome to assignment2_part1_rt’s documentation!<a class="headerlink" href="#welcome-to-assignment2-part1-rt-s-documentation" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="scripts-documentation">
+<h1>Scripts Documentation<a class="headerlink" href="#scripts-documentation" title="Permalink to this heading"></a></h1>
+<section id="module-action_client">
+<span id="action-client-py"></span><h2>action_client.py<a class="headerlink" href="#module-action_client" title="Permalink to this heading"></a></h2>
+<p>Action client module for robot navigation.</p>
+<p>This module implements an action client that allows users to set target positions
+for a robot or cancel current goals. It also publishes the robot’s current status
+including position and velocity.</p>
+<dl class="simple">
+<dt>ROS Components:</dt><dd><ul class="simple">
+<li><p>Node: action_client</p></li>
+<li><p>Subscriber: /odom</p></li>
+<li><p>Publisher: /status</p></li>
+<li><p>Action Client: /reaching_goal</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="action_client.action_client">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">action_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/action_client.html#action_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#action_client.action_client" title="Permalink to this definition"></a></dt>
+<dd><p>Action client for setting and canceling goals.</p>
+<p>This function allows users to set new goals by specifying x and y coordinates
+or cancel the current goal if it is not already reached. Goals are constrained
+within [-10, 10] for both x and y coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="action_client.callback">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Odometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/action_client.html#callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#action_client.callback" title="Permalink to this definition"></a></dt>
+<dd><p>Process odometry data and publish robot status.</p>
+<p>This callback function extracts position and velocity information from
+odometry messages and publishes them as Status messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>nav_msgs.msg.Odometry</em>) – The current odometry message containing position and velocity data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Publishes<span class="colon">:</span></dt>
+<dd class="field-even"><p>Status message with robot’s position (x, y) and velocities (v_x, v_z)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="action_client.client">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">actionlib.SimpleActionClient</span></em><a class="headerlink" href="#action_client.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="action_client.goalReached">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">goalReached</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/action_client.html#goalReached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#action_client.goalReached" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the goal has been reached.</p>
+<p>This function checks the state of the action client to determine whether
+the robot has successfully reached its goal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the goal is reached, False otherwise</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="action_client.main">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/action_client.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#action_client.main" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the ROS node and set up publishers and subscribers.</p>
+<p>This function initializes the ROS node named ‘action_client’, sets up a publisher
+for robot status, and subscribes to the ‘/odom’ topic to receive odometry data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="action_client.pub">
+<span class="sig-prename descclassname"><span class="pre">action_client.</span></span><span class="sig-name descname"><span class="pre">pub</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rospy.Publisher</span></em><a class="headerlink" href="#action_client.pub" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-bug_as">
+<span id="bug-as-py"></span><h2>bug_as.py<a class="headerlink" href="#module-bug_as" title="Permalink to this heading"></a></h2>
+<p>Bug Algorithm implementation for robot navigation with obstacle avoidance.</p>
+<p>This module implements a Bug0 algorithm for robot navigation in ROS. It allows the robot
+to move towards a goal position while avoiding obstacles using wall following behavior.
+The module uses an action server to handle navigation goals.</p>
+<p>The module provides:
+- Callbacks for odometry and laser scan data
+- State machine for switching between go-to-point and wall-following behaviors
+- Action server implementation for handling navigation goals</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.change_state">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Changes the robot’s behavior state and activates the corresponding services.</p>
+<p>This function manages the transition between different states of the robot’s
+behavior and activates or deactivates the appropriate services accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>int</em>) – The new state to switch to.
+0 - Go to point
+1 - Wall following
+2 - Done</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>srv_client_go_to_point_</cite>, <cite>srv_client_wall_follower_</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.clbk_laser">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">clbk_laser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.LaserScan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#clbk_laser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.clbk_laser" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function for the ‘/scan’ topic subscriber.</p>
+<p>This function processes laser scan data to identify obstacles in different regions
+around the robot (right, front-right, front, front-left, left).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>LaserScan</em>) – Laser scan data providing distances to obstacles.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Updates:</dt><dd><ul class="simple">
+<li><p><cite>regions_</cite> (Dict[str, float]): Dictionary containing distance measurements
+in predefined regions around the robot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.clbk_odom">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">clbk_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Odometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#clbk_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.clbk_odom" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function for the ‘/odom’ topic subscriber.</p>
+<p>This function processes odometry data to extract the robot’s position,
+pose, and orientation (yaw angle).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>Odometry</em>) – Odometry message containing the robot’s position and orientation.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Updates:</dt><dd><ul class="simple">
+<li><p><cite>position_</cite> (Point): Position of the robot.</p></li>
+<li><p><cite>pose_</cite> (Pose): Pose of the robot.</p></li>
+<li><p><cite>yaw_</cite> (float): Yaw angle of the robot in radians.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.done">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.done" title="Permalink to this definition"></a></dt>
+<dd><p>Stops the robot by publishing zero velocities.</p>
+<p>This function is called when navigation is complete or needs to be
+interrupted, ensuring the robot comes to a complete stop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.main">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to initialize the node and setup subscribers, publishers, and services.</p>
+<p>This function:
+- Initializes the ROS node
+- Sets up subscribers for laser and odometry data
+- Creates service clients for navigation behaviors
+- Initializes and starts the action server
+- Sets default desired position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.normalize_angle">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">normalize_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/bug_as.html#normalize_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.normalize_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Normalizes an angle to the range [-pi, pi].</p>
+<p>This function ensures that the angle is within the standard range by
+applying the appropriate transformation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>angle</strong> (<em>float</em>) – Angle in radians to be normalized.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em> – Normalized angle in the range [-pi, pi].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bug_as.planning">
+<span class="sig-prename descclassname"><span class="pre">bug_as.</span></span><span class="sig-name descname"><span class="pre">planning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">assignment2_part1_rt.msg.PlanningGoal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/bug_as.html#planning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bug_as.planning" title="Permalink to this definition"></a></dt>
+<dd><p>Executes the planning to move the robot towards the target position.</p>
+<p>This function is the callback for the action server. It manages the robot’s
+movement while checking its state and updating feedback to the client.
+It implements the core of the Bug0 algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>goal</strong> (<em>PlanningGoal</em>) – Goal containing the target position coordinates.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Updates:</dt><dd><ul class="simple">
+<li><p>Robot’s state through the state machine</p></li>
+<li><p>Provides feedback to the action client</p></li>
+<li><p>Sets the final result of the action</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>change_state(), done()</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-dis_avg">
+<span id="dis-avg-py"></span><h2>dis_avg.py<a class="headerlink" href="#module-dis_avg" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dis_avg.distAvgCallback">
+<span class="sig-prename descclassname"><span class="pre">dis_avg.</span></span><span class="sig-name descname"><span class="pre">distAvgCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">assignment2_part1_rt.srv.DisAvg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">assignment2_part1_rt.srv.DisAvgResponse</span></span></span><a class="reference internal" href="_modules/dis_avg.html#distAvgCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dis_avg.distAvgCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Service callback function to compute the robot’s distance from the target
+and calculate the average linear and angular velocities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>DisAvg</em>) – Service request containing necessary information</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Service response with calculated distance and average velocities</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DisAvgResponse</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>The response contains the following fields:</dt><dd><ul class="simple">
+<li><p>distance (float): Euclidean distance between robot and target position.</p></li>
+<li><p>avg_v_x (float): Average linear velocity along the x-axis over the sliding window.</p></li>
+<li><p>avg_v_z (float): Average angular velocity around the z-axis over the sliding window.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dis_avg.main">
+<span class="sig-prename descclassname"><span class="pre">dis_avg.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dis_avg.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dis_avg.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to initialize the ROS node, set up the subscriber and service.</p>
+<dl class="simple">
+<dt>This function:</dt><dd><ul class="simple">
+<li><p>Initializes the ROS node ‘dist_avg_srv’</p></li>
+<li><p>Creates a subscriber to the ‘/status’ topic</p></li>
+<li><p>Advertises the ‘dist_avg’ service</p></li>
+<li><p>Keeps the node running with rospy.spin()</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dis_avg.subCallback">
+<span class="sig-prename descclassname"><span class="pre">dis_avg.</span></span><span class="sig-name descname"><span class="pre">subCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">assignment2_part1_rt.msg.Status</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dis_avg.html#subCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dis_avg.subCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Subscriber callback function for the ‘/status’ topic.
+Updates the robot’s position and maintains a sliding window of recent velocities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>Status</em>) – Incoming message containing the robot’s position and velocities</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>This function:</dt><dd><ul class="simple">
+<li><p>Updates the global position variables (x, y)</p></li>
+<li><p>Adds new velocity measurements to the velocity history lists</p></li>
+<li><p>Maintains the sliding window size based on the ‘/window_size’ parameter</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-go_to_point_service">
+<span id="go-to-point-service-py"></span><h2>go_to_point_service.py<a class="headerlink" href="#module-go_to_point_service" title="Permalink to this heading"></a></h2>
+<p>Go to Point Service Module</p>
+<p>This module implements a service that allows a robot to navigate to a specified point in space.
+It handles the movement control by breaking down the navigation task into three states:
+1. Aligning the robot’s orientation towards the target (fix_yaw)
+2. Moving forward to the target (go_straight_ahead)
+3. Stopping when the target is reached (done)</p>
+<p>The module subscribes to odometry data and publishes velocity commands to navigate the robot.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.change_state">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Change the robot’s current state in the navigation state machine.</p>
+<p>The robot’s navigation behavior is implemented as a state machine with the
+following states:
+- 0: Fix yaw (align orientation)
+- 1: Go straight ahead (move towards target)
+- 2: Done (target reached)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>int</em>) – New state to set (0, 1, or 2).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.clbk_odom">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">clbk_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Odometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#clbk_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.clbk_odom" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function to update the robot’s current position and orientation.</p>
+<p>This function is called whenever new odometry data is received. It extracts
+the position and yaw (orientation) from the odometry message and updates
+the global variables accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>Odometry</em>) – Message containing odometry data with position and orientation.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.done">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.done" title="Permalink to this definition"></a></dt>
+<dd><p>Stop the robot by setting linear and angular velocities to zero.</p>
+<p>This function is called in state 2 of the navigation state machine
+when the robot has reached its target position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.fix_yaw">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">fix_yaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">des_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geometry_msgs.msg.Point</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#fix_yaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.fix_yaw" title="Permalink to this definition"></a></dt>
+<dd><p>Align the robot’s orientation (yaw) towards the target position.</p>
+<p>This function is called in state 0 of the navigation state machine.
+It calculates the desired yaw angle based on the target position,
+then applies appropriate angular velocity to minimize the yaw error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>des_pos</strong> (<em>Point</em>) – Desired position to align to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>None</em> – Changes state to 1 when alignment is achieved.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.go_straight_ahead">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">go_straight_ahead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">des_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geometry_msgs.msg.Point</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#go_straight_ahead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.go_straight_ahead" title="Permalink to this definition"></a></dt>
+<dd><p>Move the robot straight towards the target position.</p>
+<p>This function is called in state 1 of the navigation state machine.
+It calculates the linear velocity based on the distance to the target
+and adjusts the angular velocity to maintain the correct heading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>des_pos</strong> (<em>Point</em>) – Desired position to move towards.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>None</em> –</p>
+<dl class="simple">
+<dt>Changes state to 2 when position is reached or to 0 if</dt><dd><p>alignment is lost.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.go_to_point_switch">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">go_to_point_switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_srvs.srv.SetBoolRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">std_srvs.srv.SetBoolResponse</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#go_to_point_switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.go_to_point_switch" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function to enable or disable the robot’s navigation behavior.</p>
+<p>This service allows external nodes to activate or deactivate the robot’s
+navigation functionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>req</strong> (<em>SetBoolRequest</em>) – Service request containing a boolean data field
+to enable (True) or disable (False) navigation.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>SetBoolResponse</em> –</p>
+<dl class="simple">
+<dt>Response containing:</dt><dd><ul class="simple">
+<li><p>success (bool): Always True to indicate the service call was processed</p></li>
+<li><p>message (str): Confirmation message “Done!”</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.main">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to initialize the ROS node and control the robot’s behavior.</p>
+<p>This function:
+1. Initializes the ROS node
+2. Sets up publishers, subscribers, and services
+3. Implements the main control loop that drives the robot’s behavior based on its current state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="go_to_point_service.normalize_angle">
+<span class="sig-prename descclassname"><span class="pre">go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">normalize_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/go_to_point_service.html#normalize_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#go_to_point_service.normalize_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Normalize an angle to the range [-pi, pi].</p>
+<p>This function ensures that all angle calculations are performed within
+the standard range of [-π, π] radians.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>angle</strong> (<em>float</em>) – The angle to normalize, in radians.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em> – Normalized angle in the range [-π, π].</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-last_target">
+<span id="last-target-py"></span><h2>last_target.py<a class="headerlink" href="#module-last_target" title="Permalink to this heading"></a></h2>
+<p>Last Target Service Node</p>
+<p>This module provides a ROS service that returns the last target coordinates
+set as ROS parameters. It can be used to retrieve the most recent goal
+position sent to the robot.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="last_target.callback">
+<span class="sig-prename descclassname"><span class="pre">last_target.</span></span><span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">assignment2_part1_rt.msg.PlanningActionGoal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">assignment2_part1_rt.srv.LastInputResponse</span></span></span><a class="reference internal" href="_modules/last_target.html#callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#last_target.callback" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function for the ‘last_input’ service.</p>
+<p>This function retrieves the last target coordinates (x, y) set as ROS parameters
+and returns them as a service response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>assignment2_part1_rt.msg.PlanningActionGoal</em>) – The service request message, though not used in the current implementation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response object containing the last target coordinates</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LastInputResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="last_target.main">
+<span class="sig-prename descclassname"><span class="pre">last_target.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/last_target.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#last_target.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function for the ‘last_input_srv’ node.</p>
+<p>This function initializes the ROS node, creates a service to handle requests for
+the last target input, and keeps the node running until shut down.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rospy.ROSInterruptException: If the ROS node is interrupted before completion</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-wall_follow_service">
+<span id="wall-follow-service-py"></span><h2>wall_follow_service.py<a class="headerlink" href="#module-wall_follow_service" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.change_state">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Change the robot’s current state and log the change.</p>
+<p>This function updates the robot’s state if it differs from the current state
+and logs the change for debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>int</em>) – The new state to set (0: find the wall, 1: turn left, 2: follow the wall)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.clbk_laser">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">clbk_laser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.LaserScan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#clbk_laser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.clbk_laser" title="Permalink to this definition"></a></dt>
+<dd><p>Process laser scan data and take appropriate action.</p>
+<p>This callback divides the laser scan into five regions and stores the minimum
+distance to obstacles in each region. It then decides the next action based on these values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>LaserScan</em>) – Laser scan data from the robot’s sensors</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.find_wall">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">find_wall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">geometry_msgs.msg.Twist</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#find_wall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.find_wall" title="Permalink to this definition"></a></dt>
+<dd><p>Generate velocity command to find a wall.</p>
+<p>Creates a Twist message that moves the robot forward while turning slightly
+to the right, helping it locate a wall to follow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Velocity command to find the wall</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Twist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.follow_the_wall">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">follow_the_wall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">geometry_msgs.msg.Twist</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#follow_the_wall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.follow_the_wall" title="Permalink to this definition"></a></dt>
+<dd><p>Generate velocity command to follow alongside a wall.</p>
+<p>Creates a Twist message that moves the robot forward at a moderate speed,
+maintaining its current distance from the wall.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Velocity command to follow the wall</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Twist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.main">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.main" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize and run the wall following node.</p>
+<p>This function sets up the ROS node, creates publishers, subscribers, and services,
+and contains the main control loop that executes the wall-following behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="wall_follow_service.pub_">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">pub_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rospy.Publisher</span></em><a class="headerlink" href="#wall_follow_service.pub_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.take_action">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">take_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#take_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.take_action" title="Permalink to this definition"></a></dt>
+<dd><p>Determine and set the next robot state based on sensor data.</p>
+<p>This function analyzes the data in the global <code class="docutils literal notranslate"><span class="pre">regions_</span></code> dictionary to decide
+which state the robot should be in for effective wall following.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.turn_left">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">turn_left</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">geometry_msgs.msg.Twist</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#turn_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.turn_left" title="Permalink to this definition"></a></dt>
+<dd><p>Generate velocity command to turn the robot left.</p>
+<p>Creates a Twist message that makes the robot turn to the left,
+typically used when an obstacle is detected in front.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Velocity command to turn left</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Twist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wall_follow_service.wall_follower_switch">
+<span class="sig-prename descclassname"><span class="pre">wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">wall_follower_switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_srvs.srv.SetBool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">std_srvs.srv.SetBoolResponse</span></span></span><a class="reference internal" href="_modules/wall_follow_service.html#wall_follower_switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#wall_follow_service.wall_follower_switch" title="Permalink to this definition"></a></dt>
+<dd><p>Service callback to activate or deactivate the wall follower.</p>
+<p>This function handles requests to turn the wall following behavior
+on or off by setting the global <code class="docutils literal notranslate"><span class="pre">active_</span></code> flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>req</strong> (<em>SetBool</em>) – Service request containing a boolean to activate/deactivate the wall follower</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response indicating success and a status message</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SetBoolResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mamoru Ota.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
