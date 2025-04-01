@@ -1,0 +1,55 @@
+\hypertarget{move__robot__node_8cpp}{}\doxysection{/root/\+R\+T1/assignment2\+\_\+part2\+\_\+rt/src/move\+\_\+robot\+\_\+node.cpp File Reference}
+\label{move__robot__node_8cpp}\index{/root/RT1/assignment2\_part2\_rt/src/move\_robot\_node.cpp@{/root/RT1/assignment2\_part2\_rt/src/move\_robot\_node.cpp}}
+
+
+A R\+O\+S2 node for controlling robot movement.  
+
+
+{\ttfamily \#include \char`\"{}rclcpp/rclcpp.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/msg/twist.\+hpp\char`\"{}}\newline
+Include dependency graph for move\+\_\+robot\+\_\+node.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{move__robot__node_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classMoveRobotNode}{Move\+Robot\+Node}}
+\begin{DoxyCompactList}\small\item\em A R\+O\+S2 node class that handles robot movement commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{Indent}\textbf{ main}\par
+{\em Main function to initialize and run the \mbox{\hyperlink{classMoveRobotNode}{Move\+Robot\+Node}}
+
+This function initializes the R\+O\+S2 system, creates an instance of \mbox{\hyperlink{classMoveRobotNode}{Move\+Robot\+Node}}, and runs the node until shutdown is triggered. 
+\begin{DoxyParams}{Parameters}
+{\em argc} & Number of command line arguments \\
+\hline
+{\em argv} & Array of command line arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Return code (0 if successful) 
+\end{DoxyReturn}
+}\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{move__robot__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\doxysubsection{Detailed Description}
+A R\+O\+S2 node for controlling robot movement. 
+
+This node publishes velocity commands to control a robot\textquotesingle{}s movement. It sends linear and angular velocities to the cmd\+\_\+vel topic. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{move__robot__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{move__robot__node_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{move\_robot\_node.cpp@{move\_robot\_node.cpp}!main@{main}}
+\index{main@{main}!move\_robot\_node.cpp@{move\_robot\_node.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+

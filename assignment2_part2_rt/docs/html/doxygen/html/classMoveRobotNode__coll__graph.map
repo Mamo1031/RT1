@@ -1,0 +1,4 @@
+<map id="MoveRobotNode" name="MoveRobotNode">
+<area shape="rect" id="node1" title="A ROS2 node class that handles robot movement commands." alt="" coords="5,80,136,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="19,5,122,32"/>
+</map>

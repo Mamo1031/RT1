@@ -1,0 +1,95 @@
+\hypertarget{classMoveRobotNode}{}\doxysection{Move\+Robot\+Node Class Reference}
+\label{classMoveRobotNode}\index{MoveRobotNode@{MoveRobotNode}}
+
+
+A R\+O\+S2 node class that handles robot movement commands.  
+
+
+
+
+Inheritance diagram for Move\+Robot\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classMoveRobotNode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Move\+Robot\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classMoveRobotNode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMoveRobotNode_a038838b17bbc5b1294bdd242a3528e26}{Move\+Robot\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classMoveRobotNode}{Move\+Robot\+Node}} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classMoveRobotNode_a47a90f4e094443e879d377f2142114d0}{publish\+\_\+velocity\+\_\+command}} ()
+\begin{DoxyCompactList}\small\item\em Timer callback function to publish velocity commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Publisher$<$ geometry\+\_\+msgs\+::msg\+::\+Twist $>$\+::Shared\+Ptr \mbox{\hyperlink{classMoveRobotNode_a1bfeb314f82b0b235ec844e9286070c3}{publisher\+\_\+}}
+\item 
+rclcpp\+::\+Timer\+Base\+::\+Shared\+Ptr \mbox{\hyperlink{classMoveRobotNode_a25b785281475ff1f6c04ba7f2dca89c1}{timer\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A R\+O\+S2 node class that handles robot movement commands. 
+
+This class creates a publisher to send Twist messages to the cmd\+\_\+vel topic, controlling the robot\textquotesingle{}s linear and angular velocities at regular intervals. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMoveRobotNode_a038838b17bbc5b1294bdd242a3528e26}\label{classMoveRobotNode_a038838b17bbc5b1294bdd242a3528e26}} 
+\index{MoveRobotNode@{MoveRobotNode}!MoveRobotNode@{MoveRobotNode}}
+\index{MoveRobotNode@{MoveRobotNode}!MoveRobotNode@{MoveRobotNode}}
+\doxysubsubsection{\texorpdfstring{MoveRobotNode()}{MoveRobotNode()}}
+{\footnotesize\ttfamily Move\+Robot\+Node\+::\+Move\+Robot\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for the \mbox{\hyperlink{classMoveRobotNode}{Move\+Robot\+Node}} class. 
+
+Initializes the node, creates a publisher for velocity commands, and sets up a timer to publish messages periodically. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMoveRobotNode_a47a90f4e094443e879d377f2142114d0}\label{classMoveRobotNode_a47a90f4e094443e879d377f2142114d0}} 
+\index{MoveRobotNode@{MoveRobotNode}!publish\_velocity\_command@{publish\_velocity\_command}}
+\index{publish\_velocity\_command@{publish\_velocity\_command}!MoveRobotNode@{MoveRobotNode}}
+\doxysubsubsection{\texorpdfstring{publish\_velocity\_command()}{publish\_velocity\_command()}}
+{\footnotesize\ttfamily void Move\+Robot\+Node\+::publish\+\_\+velocity\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Timer callback function to publish velocity commands. 
+
+This function is called periodically to create and publish a Twist message with pre-\/defined linear and angular velocities. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classMoveRobotNode_a1bfeb314f82b0b235ec844e9286070c3}\label{classMoveRobotNode_a1bfeb314f82b0b235ec844e9286070c3}} 
+\index{MoveRobotNode@{MoveRobotNode}!publisher\_@{publisher\_}}
+\index{publisher\_@{publisher\_}!MoveRobotNode@{MoveRobotNode}}
+\doxysubsubsection{\texorpdfstring{publisher\_}{publisher\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Publisher$<$geometry\+\_\+msgs\+::msg\+::\+Twist$>$\+::Shared\+Ptr Move\+Robot\+Node\+::publisher\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMoveRobotNode_a25b785281475ff1f6c04ba7f2dca89c1}\label{classMoveRobotNode_a25b785281475ff1f6c04ba7f2dca89c1}} 
+\index{MoveRobotNode@{MoveRobotNode}!timer\_@{timer\_}}
+\index{timer\_@{timer\_}!MoveRobotNode@{MoveRobotNode}}
+\doxysubsubsection{\texorpdfstring{timer\_}{timer\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Timer\+Base\+::\+Shared\+Ptr Move\+Robot\+Node\+::timer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/root/\+R\+T1/assignment2\+\_\+part2\+\_\+rt/src/\mbox{\hyperlink{move__robot__node_8cpp}{move\+\_\+robot\+\_\+node.\+cpp}}\end{DoxyCompactItemize}
