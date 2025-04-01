@@ -8,13 +8,23 @@ This script performs the following tasks:
 4. Launches a custom node to control the robot's movement.
 5. Launches Gazebo and RViz2 for visualization and simulation.
 
-Usage:
-  ros2 launch assignment2_part2_rt gazebo.launch.py
+Usage
+-----
+.. code-block:: bash
 
-Dependencies:
-  - ROS 2 Foxy or later.
-  - Gazebo and RViz2.
-  - Package 'assignment2_part2_rt' with necessary URDF, config, and scripts.
+   ros2 launch assignment2_part2_rt gazebo.launch.py
+
+Parameters
+----------
+model : str, optional
+    Path to the robot model URDF/XACRO file.
+    Default: package's urdf/robot4.xacro
+
+Dependencies
+-----------
+* ROS 2 Foxy or later
+* Gazebo and RViz2
+* Package 'assignment2_part2_rt' with necessary URDF, config, and scripts
 """
 
 import os
@@ -32,8 +42,20 @@ def generate_launch_description() -> LaunchDescription:
     This function sets up the robot description, publishers, Gazebo environment,
     and visualization tools required for the simulation.
 
-    Returns:
-        LaunchDescription: The complete launch description for ROS 2.
+    Components
+    ----------
+    1. Robot state publisher - Broadcasts the robot model
+    2. Joint state publisher - Publishes joint states
+    3. Spawn entity - Places the robot in Gazebo
+    4. Move robot node - Controls robot movement
+    5. Gazebo - Simulation environment
+    6. RViz2 - Visualization tool
+
+    Returns
+    -------
+    LaunchDescription
+        A complete launch description containing all nodes and processes 
+        needed for the simulation environment.
     """
     # Define paths for robot description and RViz configuration
     test_robot_description_share: str = FindPackageShare(
