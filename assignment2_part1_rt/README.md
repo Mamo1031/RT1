@@ -45,6 +45,14 @@ This package contains ROS nodes for controlling a robot to reach specified targe
      - Uses laser scan data to detect walls and navigates alongside them.
      - Switches between states: "find wall," "turn left," and "follow wall."
 
+7. **`robot_control_interface.ipynb`**
+   - **Location**: `notebooks/robot_control_interface.ipynb`
+   - **Functionality**: 
+    Action client UI that runs on Jupyter Notebook.  
+     - Setting and canceling target position.
+     - Real-time display of robot position.
+     - Displaying the distance to an obstacle.  
+
 
 
 ## Installation
@@ -52,7 +60,9 @@ This package contains ROS nodes for controlling a robot to reach specified targe
 - ROS Noetic installed on your system.
 - Actionlib and other dependencies installed:
     ```bash
-    sudo apt-get install ros-noetic-actionlib ros-noetic-actionlib-msgs ros-noetic-nav-msgs ros-noetic-sensor-msgs ros-noetic-geometry-msgs
+    sudo apt-get install ros-noetic-actionlib ros-noetic-actionlib-msgs ros-noetic-nav-msgs ros-noetic-sensor-msgs ros-noetic-geometry-msgs  jupyter-notebook python3-ipywidgets
+    
+    pip3 install jupyros
     ```
 - Build the package:
     ```bash
@@ -68,6 +78,15 @@ This package contains ROS nodes for controlling a robot to reach specified targe
     ```bash
     roslaunch assignment2_part1_rt assignment1.launch
     ```
+
+### Jupyter Notebook Interface
+1. Source the workspace in another terminal  
+   ```bash
+   source ~/catkin_ws/devel/setup.bash
+   cd ~/catkin_ws/src/assignment2_part1_rt/notebooks
+   jupyter notebook robot_control_interface.ipynb
+   ```
+2. Open the notebook in your browser and run each cell in turn.
 
 
 
@@ -121,6 +140,8 @@ This package contains ROS nodes for controlling a robot to reach specified targe
     │   ├── robot2_laser.xacro
     ├── world/
     │   ├── assignment.world
+    ├── notebooks/
+    │   ├── robot_control_interface.ipynb
     ├── CMakeLists.txt
     ├── package.xml
 
