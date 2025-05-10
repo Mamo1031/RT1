@@ -241,7 +241,7 @@ def planning(goal: assignment2_part1_rt.msg.PlanningGoal) -> None:
             break
 
         # Handle target reached
-        elif err_pos < 0.05:
+        elif err_pos < 0.5:
             change_state(2)
             feedback.stat = "Target reached!"
             feedback.actual_pose = pose_
