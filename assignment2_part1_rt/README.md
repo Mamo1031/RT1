@@ -1,8 +1,6 @@
 # Assignment1_Part1_RT
 This package contains ROS nodes for controlling a robot to reach specified targets and monitoring its position and velocity using an action server. The package includes nodes for setting goals, monitoring status, and calculating distance and speed averages.
 
-
-
 ## Overview
 ### Nodes
 1. **`action_client`**
@@ -48,12 +46,12 @@ This package contains ROS nodes for controlling a robot to reach specified targe
 7. **`robot_control_interface.ipynb`**
    - **Location**: `notebooks/robot_control_interface.ipynb`
    - **Functionality**: 
-    Action client UI that runs on Jupyter Notebook.  
-     - Setting and canceling target position.
-     - Real-time display of robot position.
-     - Displaying the distance to an obstacle.  
-
-
+     - Provides an interactive Jupyter Notebook interface for controlling the robot.
+     - **Features**:
+       - Assign or cancel goals for the robot.
+       - Display the distance to the closest obstacle in real-time.
+       - Real-time plot of the robot's position using `FuncAnimation`.
+       - Real-time plot of the number of reached/not-reached targets using `FuncAnimation`.
 
 ## Installation
 ### Prerequisites
@@ -71,8 +69,6 @@ This package contains ROS nodes for controlling a robot to reach specified targe
     source devel/setup.bash
     ```
 
-
-
 ## Usage
 - Launch the simulation:
     ```bash
@@ -88,7 +84,15 @@ This package contains ROS nodes for controlling a robot to reach specified targe
    ```
 2. Open the notebook in your browser and run each cell in turn.
 
-
+### Notebook Features
+- **Goal Management**:
+  - Assign a new goal to the robot by specifying x and y coordinates.
+  - Cancel the current goal if needed.
+- **Obstacle Information**:
+  - Display the distance to the closest obstacle in real-time.
+- **Real-Time Plots**:
+  - **Robot Position**: A real-time plot of the robot's position and path using `FuncAnimation`.
+  - **Target Statistics**: A real-time plot showing the number of reached and not-reached targets using `FuncAnimation`.
 
 ## User Instructions
 - Action Client:
@@ -111,7 +115,8 @@ This package contains ROS nodes for controlling a robot to reach specified targe
 - Wall Follower Service:
     - Enables obstacle avoidance by following walls when obstacles are detected.
 
-
+- **Jupyter Notebook**:
+    - Provides an interactive interface for controlling the robot and visualizing its behavior in real-time.
 
 ## File Structure
     assignment2_part1_rt
@@ -145,8 +150,6 @@ This package contains ROS nodes for controlling a robot to reach specified targe
     ├── CMakeLists.txt
     ├── package.xml
 
-
-
 ## Topics 
 - **Published**:
     - `/cmd_vel` (`geometry_msgs/Twist`): Robot velocity commands.
@@ -155,8 +158,6 @@ This package contains ROS nodes for controlling a robot to reach specified targe
 - **Subscribed**:
     - `/odom` (`nav_msgs/Odometry`): Odometry data for position and orientation.
     - `/scan` (`sensor_msgs/LaserScan`): Laser scan data for obstacle detection.
-
-
 
 ## Services
 - **`/dist_avg`**:
